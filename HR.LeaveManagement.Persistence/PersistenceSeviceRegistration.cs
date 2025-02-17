@@ -4,7 +4,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using HR.LeaveManagement.Application.Contracts.Persistence;
 using HR.LeaveManagement.Persistence.DatabaseContext;
+using HR.LeaveManagement.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -17,8 +19,13 @@ namespace HR.LeaveManagement.Persistence
         {
             services.AddDbContext<HrDatabaseContext>(options =>
             {
-                options.UseSqlServer()
-            })
+                options.UseSqlServer();
+            });
+
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddScoped(typeof(ILeaveTypeRepository), typeof(LeaveTypeRepository));
+            services.AddScoped(typeof(ILeaveRequestRepository), typeof(LeaveRequestRepository));
+            services.AddScoped(typeof(ILeaveAllocationRepository), typeof(LeaveAllocationRepository));
           return services;
         }
     }
