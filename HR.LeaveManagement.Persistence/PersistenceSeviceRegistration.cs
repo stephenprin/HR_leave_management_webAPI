@@ -9,24 +9,26 @@ using HR.LeaveManagement.Persistence.DatabaseContext;
 using HR.LeaveManagement.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Configuration;
 
 namespace HR.LeaveManagement.Persistence
 {
     public static class PersistenceSeviceRegistration
     {
-        public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfigureOptions configureOptions)
+        public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<HrDatabaseContext>(options =>
             {
-                options.UseSqlServer();
-            });
+                services.AddDbContext<HrDatabaseContext>(options =>
+                {
+                    options.UseSqlServer(configuration.GetConnectionString("HrDatabaseConnectionString"));
+                });
 
-            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-            services.AddScoped(typeof(ILeaveTypeRepository), typeof(LeaveTypeRepository));
-            services.AddScoped(typeof(ILeaveRequestRepository), typeof(LeaveRequestRepository));
-            services.AddScoped(typeof(ILeaveAllocationRepository), typeof(LeaveAllocationRepository));
-          return services;
+                services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+                services.AddScoped(typeof(ILeaveTypeRepository), typeof(LeaveTypeRepository));
+                services.AddScoped(typeof(ILeaveRequestRepository), typeof(LeaveRequestRepository));
+                services.AddScoped(typeof(ILeaveAllocationRepository), typeof(LeaveAllocationRepository));
+                return services;
+            }
         }
     }
 }

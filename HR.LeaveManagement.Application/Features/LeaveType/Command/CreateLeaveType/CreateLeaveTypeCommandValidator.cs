@@ -12,24 +12,25 @@ namespace HR.LeaveManagement.Application.Features.LeaveType.Command.CreateLeaveT
     {
         private readonly ILeaveTypeRepository _leaveTypeRepository;
 
-        public CreateLeaveTypeCommandValidator(ILeaveTypeRepository leaveTypeRepository) { 
-          RuleFor(p=> p.Name)
-            .NotEmpty().WithMessage("{PropertyName} is required.")
-            .NotNull()
-            .MaximumLength(250).WithMessage("{PropertyName} must not exceed 250 characters.");
-      RuleFor(p => p.DefaultDays) 
-.LessThan(100).WithMessage("{PropertyName} cannot exceed 100") 
-.GreaterThan(1).WithMessage("{PropertyName} cannot be less than 1");
+        public CreateLeaveTypeCommandValidator(ILeaveTypeRepository leaveTypeRepository)
+        {
+            RuleFor(p => p.Name)
+                .NotEmpty().WithMessage("{PropertyName} is required.")
+                .NotNull()
+                .MaximumLength(250).WithMessage("{PropertyName} must not exceed 250 characters.");
+            RuleFor(p => p.DefaultDays)
+                .LessThan(100).WithMessage("{PropertyName} cannot exceed 100")
+                .GreaterThan(1).WithMessage("{PropertyName} cannot be less than 1");
 
             RuleFor(q => q.Name)
-                .MustAsync(LeaveUniqueName).WithMessage("{PropertyName} must be unique");
+                .MustAsync((name, token) => LeaveUniqueName(name, token)).WithMessage("{PropertyName} must be unique");
 
             _leaveTypeRepository = leaveTypeRepository;
         }
 
-        private async Task<bool> LeaveUniqueName(CreateLeaveTypeCommand command, CancellationToken token)
+        private async Task<bool> LeaveUniqueName(string name, CancellationToken token)
         {
-            return await _leaveTypeRepository.IsLeaveTypeNameUnique(command.Name);
+            return await _leaveTypeRepository.IsLeaveTypeNameUnique(name);
         }
     }
 }

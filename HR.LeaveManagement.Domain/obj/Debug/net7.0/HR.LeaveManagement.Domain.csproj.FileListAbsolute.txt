@@ -9,3 +9,4 @@ C:\Users\Prince\Desktop\HRLeaveManagement\HR.LeaveManagement.Domain\obj\Debug\ne
 C:\Users\Prince\Desktop\HRLeaveManagement\HR.LeaveManagement.Domain\obj\Debug\net7.0\refint\HR.LeaveManagement.Domain.dll
 C:\Users\Prince\Desktop\HRLeaveManagement\HR.LeaveManagement.Domain\obj\Debug\net7.0\HR.LeaveManagement.Domain.pdb
 C:\Users\Prince\Desktop\HRLeaveManagement\HR.LeaveManagement.Domain\obj\Debug\net7.0\ref\HR.LeaveManagement.Domain.dll
+C:\Users\Prince\Desktop\HRLeaveManagement\HR.LeaveManagement.Domain\obj\Debug\net7.0\HR.LeaveManagement.Domain.sourcelink.json
